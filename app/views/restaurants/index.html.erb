@@ -4,7 +4,7 @@
     	<%= link_to restaurant.name, restaurant_path(restaurant) %>
     	<span><%= link_to "Edit", edit_restaurant_path(restaurant) %> - </span>
     	<span><%= link_to "Delete", restaurant_path(restaurant), method: :delete %> - </span>
-    	<span><%= link_to "Review", new_restaurant_review_path(restaurant) %></span>
+    	<span><%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %></span>
     </p>
   <% end %>
 <% else %>

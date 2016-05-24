@@ -10,8 +10,9 @@ class ReviewsController < ApplicationController
   end
 
   def create
-  	p @restaurant = Restaurant.find(params[:restaurant_id])
+  	@restaurant = Restaurant.find(params[:restaurant_id])
   	@restaurant.reviews.create(review_params)
+  	redirect_to '/restaurants'
   end
 
 end
