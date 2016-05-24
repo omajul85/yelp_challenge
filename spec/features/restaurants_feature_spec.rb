@@ -47,11 +47,11 @@ feature 'Restaurants:' do
 
 	# CR(U)D
 	context 'editing restaurants' do
-		before { Restaurant.create(name: 'KFC') }
+		before { Restaurant.create(name: 'KFC', description: 'Pollo grasiento') }
 
 		scenario 'let a user edit a restaurant' do
 			visit '/restaurants'
-			click_link 'Edit'
+			click_link 'Edit KFC'
 			fill_in 'Name', with: 'KFC'
 			fill_in 'Description', with: 'Pollo grasiento'
 			click_button 'Update Restaurant'
