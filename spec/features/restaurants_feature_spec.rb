@@ -20,7 +20,7 @@ feature 'Restaurants:' do
 	end
 
 	# (C)RUD
-	context 'creating restaurants' do
+	context 'Creating restaurants' do
 		scenario 'prompts user to fill out a form, then displays the new restaurant' do
 			visit '/restaurants'
 			click_link 'Add a restaurant'
@@ -30,6 +30,18 @@ feature 'Restaurants:' do
 			expect(page).to have_content 'KFC'
 			expect(current_path).to eq '/restaurants'
 		end
+
+		context 'Creating an invalid restaurant' do
+	    it 'does not let you submit a name that is too short' do
+	      visit '/restaurants'
+	      click_link 'Add a restaurant'
+	      fill_in 'Name', with: 'Le'
+	      click_button 'Create Restaurant'
+	      expect(page).not_to have_content 'Le'
+	      expect(page).to have_content 'error'
+	    end
+	  end
+
 	end
 
 	# C(R)UD
