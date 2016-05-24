@@ -51,13 +51,25 @@ feature 'Restaurants:' do
 
 		scenario 'let a user edit a restaurant' do
 			visit '/restaurants'
-			click_link 'Edit KFC'
+			click_link 'Edit'
 			fill_in 'Name', with: 'KFC'
 			fill_in 'Description', with: 'Pollo grasiento'
 			click_button 'Update Restaurant'
 			click_link 'KFC'
 			expect(page).to have_content 'KFC'
 			expect(page).to have_content 'Pollo grasiento'
+		end
+	end
+
+	# CRU(D)
+	context 'deleting restaurants' do
+		before { Restaurant.create(name: 'KFC') }
+
+		scenario 'let a user delete a restaurant' do
+			visit '/restaurants'
+			click_link 'Delete'
+			expect(page).not_to have_content 'KFC'
+			expect(page).to have_content 'Restaurant deleted succesfully'
 		end
 	end
 
