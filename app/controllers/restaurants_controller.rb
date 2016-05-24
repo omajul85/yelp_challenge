@@ -1,12 +1,12 @@
 class RestaurantsController < ApplicationController
 	# Utility methods
 	def restaurant_params
-    params.require(:restaurant).permit(:name)
+    params.require(:restaurant).permit(:name, :description)
   end
 	
 	# GET
 	def index
-		@restaurants = Restaurant.all
+		@restaurants = Restaurant.all.sort_by{ |r| r.name }
   end
 
   # GET
@@ -21,8 +21,22 @@ class RestaurantsController < ApplicationController
   end
 
   # GET
+  # This method gets called when you go to /restaurants/:restaurant_id, and uses the ID passed in the URL to look up the correct record from the database.
   def show
   	@restaurant = Restaurant.find(params[:id])
   end
-  
+
+  # GET
+  def edit
+  	@restaurant = Restaurant.find(params[:id])
+  end
+
+  # PATCH
+  def update
+  	@restaurant = Restaurant.find(params[:id])
+  	@restaurant.update(restaurant_params)
+
+  	redirect_to '/restaurants'
+  end
+
 end
