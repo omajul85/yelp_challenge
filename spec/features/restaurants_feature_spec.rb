@@ -21,8 +21,15 @@ feature 'Restaurants:' do
 
 	# (C)RUD
 	context 'Creating restaurants' do
+		before { User.create(email: 'foo@bar.com', password: '00000000', password_confirmation: '00000000') }
+		
 		scenario 'prompts user to fill out a form, then displays the new restaurant' do
-			visit '/restaurants'
+			visit '/'
+			click_link 'Sign in'
+			fill_in 'Email', with: 'foo@bar.com'
+			fill_in 'Password', with: '00000000'
+			click_button 'Log in'
+			
 			click_link 'Add a restaurant'
 			fill_in 'Name', with: 'KFC'
 			fill_in 'Description', with: 'Deep fried goodness'
@@ -33,7 +40,12 @@ feature 'Restaurants:' do
 
 		context 'Creating an invalid restaurant' do
 	    it 'does not let you submit a name that is too short' do
-	      visit '/restaurants'
+	      visit '/'
+				click_link 'Sign in'
+				fill_in 'Email', with: 'foo@bar.com'
+				fill_in 'Password', with: '00000000'
+				click_button 'Log in'
+
 	      click_link 'Add a restaurant'
 	      fill_in 'Name', with: 'Le'
 	      click_button 'Create Restaurant'
@@ -59,10 +71,18 @@ feature 'Restaurants:' do
 
 	# CR(U)D
 	context 'editing restaurants' do
-		before { Restaurant.create(name: 'KFC', description: 'Pollo grasiento') }
+		before { 
+			Restaurant.create(name: 'KFC', description: 'Pollo grasiento')
+			User.create(email: 'foo@bar.com', password: '00000000', password_confirmation: '00000000')
+		}
 
 		scenario 'let a user edit a restaurant' do
-			visit '/restaurants'
+			visit '/'
+			click_link 'Sign in'
+			fill_in 'Email', with: 'foo@bar.com'
+			fill_in 'Password', with: '00000000'
+			click_button 'Log in'
+
 			click_link 'Edit KFC'
 			fill_in 'Name', with: 'KFC'
 			fill_in 'Description', with: 'Pollo grasiento'
@@ -75,11 +95,19 @@ feature 'Restaurants:' do
 
 	# CRU(D)
 	context 'deleting restaurants' do
-		before { Restaurant.create(name: 'KFC') }
+		before { 
+			Restaurant.create(name: 'KFC') 
+			User.create(email: 'foo@bar.com', password: '00000000', password_confirmation: '00000000')
+		}
 
 		scenario 'let a user delete a restaurant' do
-			visit '/restaurants'
-			click_link 'Delete'
+			visit '/'
+			click_link 'Sign in'
+			fill_in 'Email', with: 'foo@bar.com'
+			fill_in 'Password', with: '00000000'
+			click_button 'Log in'
+			
+			click_link 'Delete KFC'
 			expect(page).not_to have_content 'KFC'
 			expect(page).to have_content 'Restaurant deleted succesfully'
 		end

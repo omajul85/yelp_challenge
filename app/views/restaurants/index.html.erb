@@ -3,8 +3,12 @@
     <p>
     	<%= link_to restaurant.name, restaurant_path(restaurant) %> 
     	<span><%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %> - </span>
-    	<span><%= link_to "Delete", restaurant_path(restaurant), method: :delete %> - </span>
-    	<span><%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %></span>
+    	<span><%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %></span>
+    	<%if user_signed_in? %>
+        <% unless current_user.has_reviewed?(restaurant) %>
+          <span> - <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %></span>
+        <% end %>
+      <% end %>
     </p>
 		<% if restaurant.reviews.any? %>
     	<h3>Reviews:</h3>
@@ -14,7 +18,7 @@
 		  <% end %>
 		  </ul>
 		<% else %>
-			<p>No reviews for <%= restaurant.name %> yet. Be the first one!</p>
+			<p>No reviews for <%= restaurant.name %> yet.</p>
 		<% end %>	
   <% end %>
 <% else %>
