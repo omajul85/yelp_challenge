@@ -1,4 +1,6 @@
 class RestaurantsController < ApplicationController
+  before_action :authenticate_user!, :except => [:index, :show]
+  
 	# Utility methods
 	def restaurant_params
     params.require(:restaurant).permit(:name, :description)

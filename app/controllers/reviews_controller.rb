@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
-	# Utility methods
+	before_action :authenticate_user!
+
+  # Utility methods
 	def review_params
   	params.require(:review).permit(:thoughts, :rating)
   end
