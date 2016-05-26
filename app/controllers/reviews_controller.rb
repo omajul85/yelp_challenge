@@ -18,12 +18,8 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to '/restaurants'
     else
-      if @review.errors[:user]
-        flash[:notice] = "You have already reviewed this restaurant"
-        redirect_to '/restaurants'
-      else
-        render 'new'
-      end
+      flash.now[:notice] = "Field cannot be blank"
+      render 'new'
     end
   end
 
