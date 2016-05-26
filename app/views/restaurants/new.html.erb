@@ -10,11 +10,4 @@
 	<br>
 <% end %>
 
-<%= form_for @restaurant do |f| %>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.label :description %><br>
-  <%= f.text_field :description %><br>
-  <br>
-  <%= f.submit %>
-<% end %>
+<%= render "form" %>
