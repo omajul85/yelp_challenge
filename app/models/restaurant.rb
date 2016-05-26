@@ -1,5 +1,7 @@
 class Restaurant < ActiveRecord::Base
-	has_many :reviews,
+	
+  belongs_to :user
+  has_many :reviews,
       -> { extending WithUserAssociationExtension }, dependent: :destroy
 	validates :name, length: { minimum: 3 }, uniqueness: true
 
@@ -18,5 +20,9 @@ class Restaurant < ActiveRecord::Base
       i+=1
     end
     return sum/i.to_f
+  end
+
+  def belongs_to_current_user
+    current_user.restaurants.include? self
   end
 end
