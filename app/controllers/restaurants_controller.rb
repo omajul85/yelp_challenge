@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
   
 	# Utility methods
 	def restaurant_params
-    params.require(:restaurant).permit(:name, :description, :image)
+    params.require(:restaurant).permit(:name, :description, :picture)
   end
 	
 	# GET
