@@ -17,6 +17,9 @@ gem 'haml'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'paperclip'
+gem 'carrierwave'
+gem 'cloudinary'
+gem 'rails_12factor'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
