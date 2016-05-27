@@ -53,14 +53,27 @@ describe Restaurant, type: :model do
 
     context 'multiple reviews' do
       it 'returns the average' do
-        restaurant = Restaurant.create(name: 'Casa chucho')
-        restaurant.reviews.create(rating: 3)
-        restaurant.reviews.create(rating: 5)
-        restaurant.reviews.create(rating: 4)
-        p restaurant.reviews.pluck(:rating)
-        expect(restaurant.average_rating).to eq 4
+        restaurant = Restaurant.create(name: 'Moonlight')
+        user = User.create(email: 'foo1@bar.com', password: '00000000')
+        restaurant.reviews.create_with_user({rating: 1}, user)
+        user2 = User.create(email: 'bar1@foo.com', password: '00000000')
+        restaurant.reviews.create_with_user({rating: 3}, user2)
+        expect(restaurant.average_rating).to eq 2
       end
     end
+  end
+
+  it "returns true if the current_user is the creator of the restaurant" do
+    user = User.create(email: "test@test.com")
+    restaurant = Restaurant.new(user: user)
+    expect(restaurant.created_by?(user)).to be true
+  end
+
+  it "returns false if the current_user is not the author of the review" do
+    user = User.create(email: "test@test.com")
+    user2 = User.create(email: "test2@test.com")
+    restaurant = Restaurant.new(user: user)
+    expect(restaurant.created_by?(user2)).to be false
   end
 
 end
